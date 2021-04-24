@@ -1,7 +1,8 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
+import NotFound from './NotFound';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeBlog, updateBlog } from '../reducers/blogReducer';
+import { removeBlog, updateBlog } from '../actions/blog';
 
 import { useRouteMatch } from 'react-router-dom';
 
@@ -16,8 +17,9 @@ const Blog = () => {
   // const [visible, setVisible] = useState(false);
 
   const dispatch = useDispatch();
-  const blogs = useSelector((state) => state.blogs);
+  const blogs = useSelector((state) => state.blogList.blogs);
   const match = useRouteMatch('/blogs/:id');
+  console.log(match);
   const blog = match ? blogs.find((blog) => blog.id === match.params.id) : null;
 
   // const hideWhenVisible = { display: visible ? 'none' : '' };
@@ -50,32 +52,37 @@ const Blog = () => {
       dispatch(removeBlog(id));
     }
   };
-  return (
-    <div style={blogStyle}>
-      <div>
-        {blog.title} {blog.author}{' '}
+
+  if (blog) {
+    return (
+      <div style={blogStyle}>
+        <div>
+          {blog.title} {blog.author}{' '}
+        </div>
+        <div>
+          <p>{blog.url}</p>
+          <p>
+            {' '}
+            {blog.likes} likes
+            <input
+              id="like-button"
+              type="button"
+              value="like"
+              onClick={handleLike}
+            />{' '}
+            <input type="button" value="dislike" onClick={handleLike} />
+          </p>
+          {/* <p>user: {user.name}</p> */}
+          {/* style={removeStyle}  */}
+          <button id="remove-button" onClick={() => handleRemove(blog.id)}>
+            remove
+          </button>
+        </div>
       </div>
-      <div>
-        <p>{blog.url}</p>
-        <p>
-          {' '}
-          {blog.likes} likes
-          <input
-            id="like-button"
-            type="button"
-            value="like"
-            onClick={handleLike}
-          />{' '}
-          <input type="button" value="dislike" onClick={handleLike} />
-        </p>
-        {/* <p>user: {user.name}</p> */}
-        {/* style={removeStyle}  */}
-        <button id="remove-button" onClick={() => handleRemove(blog.id)}>
-          remove
-        </button>
-      </div>
-    </div>
-  );
+    );
+  } else {
+    return <NotFound />;
+  }
 };
 
 // Blog.propTypes = {

@@ -8,7 +8,7 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleLogin = async (event) => {
+  const handleLogin = (event) => {
     event.preventDefault();
     dispatch(
       loginUser({

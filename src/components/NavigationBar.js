@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import Button from '@material-ui/core/Button';
 import { logoutUser } from '../actions/login';
 
 const NavigationBar = () => {
@@ -20,7 +21,7 @@ const NavigationBar = () => {
     }
     history.push('/login');
   };
-  console.log(location);
+  // console.log(location);
   const isLogin = location.pathname === '/login';
   return (
     <div>
@@ -30,10 +31,20 @@ const NavigationBar = () => {
       <Link style={styles} to="/users">
         users
       </Link>
+      <Link style={styles} to="/createBlog">
+        Create a Blog
+      </Link>
       <span>{user ? `${user.name} is logged in` : ''} </span>
 
       {!isLogin && (
-        <button onClick={handleLog}>{user ? 'Logout' : 'Login'}</button>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={handleLog}
+        >
+          {user ? 'Logout' : 'Login'}
+        </Button>
       )}
     </div>
   );

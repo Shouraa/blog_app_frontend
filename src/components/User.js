@@ -1,15 +1,15 @@
 import React from 'react';
+import NotFound from './NotFound';
 import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 
 const User = () => {
   const users = useSelector(({ users }) => users);
-  console.log(users);
 
   const match = useRouteMatch('/users/:id');
   const user = match ? users.find((user) => user.id === match.params.id) : null;
 
-  if (!user) return null;
+  if (!user) return <NotFound />;
   return (
     <div>
       <h1>{`${user.name}`}</h1>

@@ -9,7 +9,7 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 
 export const isLoggedIn = () => {
   return async (dispatch) => {
-    const getUser = window.localStorage.getItem('loggedBlogappUser');
+    const getUser = window.localStorage.getItem('loggedAppUser');
     if (getUser) {
       const loggedInUser = JSON.parse(getUser);
       blogService.setToken(loggedInUser.token);
@@ -28,9 +28,11 @@ export const loginUser = (user) => {
     });
     try {
       const loggedInUser = await loginService.login(user);
-      blogService.setToken(loggedInUser.token);
+      console.log(loggedInUser.token);
+
+      blogService.setToken('kirekhar', loggedInUser.token);
       window.localStorage.setItem(
-        'loggedBlogappUser',
+        'loggedAppUser',
         JSON.stringify(loggedInUser)
       );
       dispatch({
@@ -48,7 +50,7 @@ export const loginUser = (user) => {
 };
 
 export const logoutUser = () => {
-  window.localStorage.removeItem('loggedBlogappUser');
+  window.localStorage.removeItem('loggedAppUser');
   window.localStorage.clear();
 
   return {
