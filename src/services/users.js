@@ -1,9 +1,15 @@
-import axios from 'axios';
-const baseUrl = '/api/users';
+import { apiClient } from '../api/api';
+const baseUrl = '/users';
 
-const getAll = () => {
-  const request = axios.get(baseUrl);
-  return request.then((response) => response.data);
+const getAll = async () => {
+  try {
+    const response = await apiClient.get(baseUrl);
+    return response.data;
+  } catch (error) {
+    if (error.response.status === 404) {
+      throw new Error('Not found');
+    }
+  }
 };
 
 export default { getAll };

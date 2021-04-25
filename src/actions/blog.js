@@ -23,6 +23,7 @@ export const addBlog = (newBlog) => {
     });
     try {
       const blog = await blogServices.create(newBlog);
+      console.log('blog', blog);
       dispatch({
         type: ADD_BLOG_SUCCESS,
         payload: blog,

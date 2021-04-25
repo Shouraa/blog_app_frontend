@@ -1,5 +1,4 @@
 import loginService from '../services/login';
-import blogService from '../services/blogs';
 
 export const LOGIN_USER_START = 'LOGIN_USER_START';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
@@ -12,7 +11,6 @@ export const isLoggedIn = () => {
     const getUser = window.localStorage.getItem('loggedAppUser');
     if (getUser) {
       const loggedInUser = JSON.parse(getUser);
-      blogService.setToken(loggedInUser.token);
       dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: loggedInUser.data,
@@ -28,13 +26,9 @@ export const loginUser = (user) => {
     });
     try {
       const loggedInUser = await loginService.login(user);
-      console.log(loggedInUser.token);
+      console.log(loggedInUser.data);
 
-      blogService.setToken('kirekhar', loggedInUser.token);
-      window.localStorage.setItem(
-        'loggedAppUser',
-        JSON.stringify(loggedInUser)
-      );
+      localStorage.setItem('loggedAppUser', JSON.stringify(loggedInUser));
       dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: loggedInUser.data,

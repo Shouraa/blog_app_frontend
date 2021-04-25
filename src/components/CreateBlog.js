@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { useHistory } from 'react-router-dom';
 
 import { addBlog } from '../actions/blog';
 
 const CreateBlog = () => {
-  // const [title, setTitle] = useState('');
-  // const [author, setAuthor] = useState('');
-  // const [url, setUrl] = useState('');
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
 
   const dispatch = useDispatch();
 
@@ -15,17 +15,16 @@ const CreateBlog = () => {
     event.preventDefault();
     dispatch(
       addBlog({
-        title: event.target.title.value,
-        author: event.target.author.value,
-        url: event.target.url.value,
+        title,
+        author,
+        url,
         likes: 0,
       })
     );
-    console.log(event.target.title.value);
 
-    event.target.title.value = '';
-    event.target.author.value = '';
-    event.target.url.value = '';
+    setAuthor('');
+    setTitle('');
+    setUrl('');
   };
 
   return (
@@ -38,9 +37,9 @@ const CreateBlog = () => {
             <input
               id="title"
               type="text"
-              // value={title}
+              value={title}
               name="Title"
-              // onChange={({ target }) => setTitle(target.value)}
+              onChange={({ target }) => setTitle(target.value)}
             />
           </div>
           <div className="form-control">
@@ -48,9 +47,9 @@ const CreateBlog = () => {
             <input
               id="author"
               type="text"
-              // value={author}
+              value={author}
               name="Author"
-              // onChange={({ target }) => setAuthor(target.value)}
+              onChange={({ target }) => setAuthor(target.value)}
             />
           </div>
           <div className="form-control">
@@ -58,9 +57,9 @@ const CreateBlog = () => {
             <input
               id="url"
               type="text"
-              // value={url}
+              value={url}
               name="Url"
-              // onChange={({ target }) => setUrl(target.value)}
+              onChange={({ target }) => setUrl(target.value)}
             />
           </div>
           <button id="create-button" type="submit">

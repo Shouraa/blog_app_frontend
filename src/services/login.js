@@ -4,9 +4,12 @@ const baseUrl = '/api/login';
 const login = async (credentials) => {
   try {
     const response = await axios.post(baseUrl, credentials);
+    console.log(response);
+
     if (response.status !== 200) {
       throw new Error('Something went wrong');
     }
+
     return response;
   } catch (error) {
     if (error.status === 400) {
