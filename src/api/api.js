@@ -20,6 +20,6 @@ apiClient.interceptors.request.use((config) => {
   const user = JSON.parse(localStorage.getItem('loggedAppUser'));
   const token = user && user.data.accesstoken;
   config.headers.Authorization = `Bearer ${token}`;
-  console.log('from intercepter', config.headers.Authorization);
+  console.log('from interceptor', config.headers.Authorization);
   return config;
 });
