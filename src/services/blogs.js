@@ -24,8 +24,8 @@ const create = async (newObject) => {
   }
 };
 
-const update = async (object, id) => {
-  const response = await apiClient.put(`${url}/${id}`, object);
+const update = async (id, updatedBlog) => {
+  const response = await apiClient.patch(`${url}/${id}`, updatedBlog);
   return response.data;
 };
 
@@ -34,4 +34,10 @@ const remove = async (id) => {
   return response.data;
 };
 
-export default { getAll, create, update, remove };
+const like = async (id) => {
+  const response = await apiClient.patch(`${url}/${id}/like`);
+  console.log('object', response.data);
+  return response.data;
+};
+
+export default { getAll, create, update, remove, like };

@@ -9,6 +9,7 @@ import {
   UPDATE_BLOG_START,
   UPDATE_BLOG_SUCCESS,
   UPDATE_BLOG_FAIL,
+  LIKE_BLOG,
 } from '../actions/blog';
 
 const initialState = {
@@ -61,8 +62,8 @@ const blogReducer = (state = initialState, action) => {
     case UPDATE_BLOG_SUCCESS:
       return {
         ...state,
-        blogs: state.map((b) =>
-          b.id !== action.payload.blog.id ? b : action.payload.blog
+        blogs: state.blogs.map((b) =>
+          b.id !== action.payload.id ? b : action.payload
         ),
         blogLoader: false,
       };
@@ -72,7 +73,14 @@ const blogReducer = (state = initialState, action) => {
         blogError: action.payload,
         blogLoader: false,
       };
-
+    case LIKE_BLOG:
+      return {
+        ...state,
+        blogs: state.blogs.map((b) =>
+          b.id !== action.payload.id ? b : action.payload
+        ),
+        blogLoader: false,
+      };
     case INIT_BLOGS:
       return {
         ...state,
@@ -82,57 +90,5 @@ const blogReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-// export const addBlog = (newBlog) => {
-//   return async (dispatch) => {
-//     dispatch({
-//       type: LOGIN_USER_START,
-//     });
-//     try {
-//       const blog = await blogServices.create(newBlog);
-//       dispatch({
-//         type: ADD_BLOG_SUCCESS,
-//         payload: blog,
-//       });
-//       dispatch(setNotification('Blog was added', 5));
-//       dispatch(initializeUsers());
-//     } catch (err) {
-//       dispatch(setError(`Failed to create: ${err.message}`, 5));
-//     }
-//   };
-// };
-
-// export const removeBlog = (id) => {
-//   return async (dispatch) => {
-//     await blogServices.remove(id);
-//     dispatch({
-//       type: 'REMOVE_BLOG',
-//       payload: { id },
-//     });
-//     dispatch(setNotification('Blog was removed', 5));
-//     dispatch(initializeUsers());
-//   };
-// };
-
-// export const updateBlog = (blog) => {
-//   return async (dispatch) => {
-//     const updatedBlog = await blogServices.update(blog, blog.id);
-//     dispatch({
-//       type: 'UPDATE_BLOG',
-//       payload: { blog: updatedBlog },
-//     });
-//     dispatch(setNotification('Blog was updated', 5));
-//   };
-// };
-
-// export const initializeBlogs = () => {
-//   return async (dispatch) => {
-//     const blogs = await blogServices.getAll();
-//     dispatch({
-//       type: 'INIT_BLOGS',
-//       payload: blogs,
-//     });
-//   };
-// };
 
 export default blogReducer;

@@ -16,6 +16,8 @@ export const UPDATE_BLOG_START = 'UPDATE_BLOG_START';
 export const UPDATE_BLOG_SUCCESS = 'UPDATE_BLOG_SUCCESS';
 export const UPDATE_BLOG_FAIL = 'UPDATE_BLOG_FAIL';
 
+export const LIKE_BLOG = 'LIKE_BLOG';
+
 export const addBlog = (newBlog) => {
   return async (dispatch) => {
     dispatch({
@@ -62,16 +64,17 @@ export const removeBlog = (id) => {
   };
 };
 
-export const updateBlog = (blog) => {
+export const updateBlog = (id, blog) => {
   return async (dispatch) => {
     dispatch({
       type: UPDATE_BLOG_START,
     });
     try {
-      const updatedBlog = await blogServices.update(blog, blog.id);
+      const data = await blogServices.update(id, blog);
+      console.log(data);
       dispatch({
         type: UPDATE_BLOG_SUCCESS,
-        payload: { blog: updatedBlog },
+        payload: data,
       });
       dispatch(setNotification('Blog was updated', 5));
     } catch (error) {
@@ -83,12 +86,32 @@ export const updateBlog = (blog) => {
   };
 };
 
+export const likeBlog = (id) => {
+  return async (dispatch) => {
+    try {
+      const data = await blogServices.like(id);
+      console.log(data);
+      dispatch({
+        type: LIKE_BLOG,
+        payload: data,
+      });
+      dispatch(setNotification('Blog was liked', 5));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const initializeBlogs = () => {
   return async (dispatch) => {
-    const blogs = await blogServices.getAll();
-    dispatch({
-      type: INIT_BLOGS,
-      payload: blogs,
-    });
+    try {
+      const blogs = await blogServices.getAll();
+      dispatch({
+        type: INIT_BLOGS,
+        payload: blogs,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 };
