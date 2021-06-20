@@ -1,10 +1,6 @@
 import { apiClient } from '../api/api';
 const url = '/blogs';
 
-// const setToken = (newToken) => {
-//   token = `bearer ${newToken}`;
-// };
-
 const getAll = async () => {
   const response = await apiClient.get(url);
   return response.data;

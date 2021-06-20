@@ -8,7 +8,6 @@ import { addBlog, updateBlog } from '../../actions/blog';
 
 const BlogForm = ({ currentId, setCurrentId }) => {
   const [blogData, setBlogData] = useState({
-    author: '',
     title: '',
     message: '',
     tags: '',
@@ -22,6 +21,8 @@ const BlogForm = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const user = JSON.parse(localStorage.getItem('loggedUser'));
+
   useEffect(() => {
     if (blog) {
       setBlogData(blog);
@@ -31,7 +32,6 @@ const BlogForm = ({ currentId, setCurrentId }) => {
   const reset = () => {
     setCurrentId(0);
     setBlogData({
-      author: '',
       title: '',
       message: '',
       tags: '',
@@ -42,13 +42,25 @@ const BlogForm = ({ currentId, setCurrentId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentId === 0) {
-      dispatch(addBlog(blogData));
+      dispatch(addBlog({ ...blogData, name: user?.result?.name }));
       reset();
     } else {
-      dispatch(updateBlog(currentId, blogData));
+      dispatch(
+        updateBlog(currentId, { ...blogData, name: user?.result?.name })
+      );
       reset();
     }
   };
+
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please sign in before creating and liking blogs!
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -61,14 +73,7 @@ const BlogForm = ({ currentId, setCurrentId }) => {
         <Typography variant="h6">
           {currentId ? 'Edit' : 'Create'} a Blog
         </Typography>
-        <TextField
-          name="author"
-          variant="outlined"
-          label="Author"
-          fullWidth
-          value={blogData.author}
-          onChange={(e) => setBlogData({ ...blogData, author: e.target.value })}
-        />
+
         <TextField
           name="title"
           variant="outlined"

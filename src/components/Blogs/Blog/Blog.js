@@ -17,7 +17,6 @@ import { removeBlog, likeBlog } from '../../../actions/blog';
 
 import useStyles from './styles';
 
-// user, removeBlog,handleChange
 const Blog = ({ blog, setCurrentId }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -30,7 +29,7 @@ const Blog = ({ blog, setCurrentId }) => {
         title={blog.title}
       />
       <div className={classes.overlay}>
-        <Typography variant="h6">{blog.author}</Typography>
+        <Typography variant="h6">{blog.name}</Typography>
         <Typography variant="body2">
           {moment(blog.createdAt).fromNow()}
         </Typography>
@@ -70,7 +69,7 @@ const Blog = ({ blog, setCurrentId }) => {
           onClick={() => dispatch(likeBlog(blog.id))}
         >
           <ThumpUpAltIcon fontSize="small" />
-          {blog.likeCount}
+          {blog.likeCount.length}
         </Button>
         <Button
           size="small"

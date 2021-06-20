@@ -17,8 +17,9 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
-  const user = JSON.parse(localStorage.getItem('loggedAppUser'));
-  const token = user && user.data.accesstoken;
+  const user = JSON.parse(localStorage.getItem('loggedUser'));
+  console.log('user from interceptor', user);
+  const token = user && user.token;
   config.headers.Authorization = `Bearer ${token}`;
   console.log('from interceptor', config.headers.Authorization);
   return config;
