@@ -13,7 +13,6 @@ export const loginUser = (formData, history) => {
     });
     try {
       const { data } = await loginService.signin(formData);
-      console.log(data);
 
       dispatch({
         type: AUTH_USER_SUCCESS,

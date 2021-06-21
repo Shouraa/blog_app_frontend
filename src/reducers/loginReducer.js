@@ -23,7 +23,6 @@ export const loginReducer = (state = initialState, action) => {
         'loggedUser',
         JSON.stringify({ ...action?.payload })
       );
-      console.log(action.payload);
       return {
         ...state,
         authData: action.data,

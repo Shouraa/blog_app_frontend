@@ -8,9 +8,7 @@ const getAll = async () => {
 
 const create = async (newObject) => {
   try {
-    console.log('blog create action');
     const response = await apiClient.post(url, newObject);
-    console.log('response', response);
     return response.data;
   } catch (error) {
     if (error.status === 400) {
@@ -32,7 +30,6 @@ const remove = async (id) => {
 
 const like = async (id) => {
   const response = await apiClient.patch(`${url}/${id}/like`);
-  console.log('object', response.data);
   return response.data;
 };
 

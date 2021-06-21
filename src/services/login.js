@@ -4,7 +4,6 @@ const baseUrl = '/users';
 const signin = async (formData) => {
   try {
     const response = await apiClient.post(`${baseUrl}/signin`, formData);
-    console.log('first response from loginServices', response);
 
     if (response.status !== 200) {
       throw new Error('Something went wrong');
@@ -21,7 +20,6 @@ const signin = async (formData) => {
 const signup = async (formData) => {
   try {
     const response = await apiClient.post(`${baseUrl}/signup`, formData);
-    console.log('second response from loginServices', response);
     return response;
   } catch (error) {
     console.log(error);

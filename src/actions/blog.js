@@ -25,7 +25,6 @@ export const addBlog = (newBlog) => {
     });
     try {
       const blog = await blogServices.create(newBlog);
-      console.log('blog', blog);
       dispatch({
         type: ADD_BLOG_SUCCESS,
         payload: blog,
@@ -71,7 +70,6 @@ export const updateBlog = (id, blog) => {
     });
     try {
       const data = await blogServices.update(id, blog);
-      console.log(data);
       dispatch({
         type: UPDATE_BLOG_SUCCESS,
         payload: data,
@@ -90,7 +88,6 @@ export const likeBlog = (id) => {
   return async (dispatch) => {
     try {
       const data = await blogServices.like(id);
-      console.log(data);
       dispatch({
         type: LIKE_BLOG,
         payload: data,
